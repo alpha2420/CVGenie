@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+@import "tailwindcss";
+
+* {
+  font-family: "Outfit", sans-serif;
+}
+
+:root {
+  /* Warm Color Palette */
+  --warm-cream: #FEF9ED;
+  --warm-cream-dark: #F5EFE0;
+  --dark-brown: #5D524B;
+  --medium-brown: #8B7355;
+  --light-brown: #A68A6E;
+  --accent-peach: #E8B4A0;
+  --accent-coral: #D89B88;
+
+  /* Animation Durations */
+  --animation-fast: 200ms;
+  --animation-normal: 300ms;
+  --animation-slow: 500ms;
+}
+
+/* Smooth page background */
+body {
+  background-color: var(--warm-cream);
+  color: var(--dark-brown);
+  transition: background-color var(--animation-normal) ease;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes smoothHover {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-4px);
+  }
+}
+
+/* Animation Utility Classes */
+.fade-in {
+  animation: fadeIn var(--animation-slow) ease-out;
+}
+
+.slide-up {
+  animation: slideUp var(--animation-slow) ease-out;
+}
+
+.smooth-transition {
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Element Styles */
+button {
+  cursor: pointer;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input:not([type="checkbox"]) {
+  outline: none;
+  border: 1px solid rgb(214 211 209);
+  border-radius: 0.5rem;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input:not([type="checkbox"]):focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(120, 53, 15, 0.2);
+  border-color: rgba(120, 53, 15, 0.4);
+}
+
+textarea {
+  outline: none;
+  border: 1px solid rgb(214 211 209);
+  border-radius: 0.5rem;
+  resize: none;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(120, 53, 15, 0.2);
+  border-color: rgba(120, 53, 15, 0.4);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--warm-cream-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--medium-brown);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-brown);
+}
