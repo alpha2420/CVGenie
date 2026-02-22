@@ -15,7 +15,7 @@ const Hero = () => {
             <div className="min-h-screen pb-20" style={{ backgroundColor: '#FEF9ED' }}>
                 {/* Navbar */}
                 <nav className="z-50 flex items-center justify-between w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm fade-in">
-                    <a href="https://prebuiltui.com">
+                    <a href="#">
                         <img src="/logo.svg" alt="logo" className="h-11 w-auto" />
                     </a>
 

@@ -38,15 +38,15 @@ const ModernTemplate = ({ data, accentColor }) => {
 						</div>
 					)}
 					{data.personal_info?.linkedin && (
-						<a target="_blank" href={data.personal_info?.linkedin} className="flex items-center gap-2">
+						<a target="_blank" rel="noopener noreferrer" href={data.personal_info?.linkedin} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
 							<Linkedin className="size-4" />
-							<span className="break-all text-xs">{data.personal_info.linkedin.split("https://www.")[1] ? data.personal_info.linkedin.split("https://www.")[1] : data.personal_info.linkedin}</span>
+							<span className="text-xs">LinkedIn</span>
 						</a>
 					)}
 					{data.personal_info?.website && (
-						<a target="_blank" href={data.personal_info?.website} className="flex items-center gap-2">
+						<a target="_blank" rel="noopener noreferrer" href={data.personal_info?.website} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
 							<Globe className="size-4" />
-							<span className="break-all text-xs">{data.personal_info.website.split("https://")[1] ? data.personal_info.website.split("https://")[1] : data.personal_info.website}</span>
+							<span className="text-xs">Personal Website</span>
 						</a>
 					)}
 				</div>
@@ -103,13 +103,19 @@ const ModernTemplate = ({ data, accentColor }) => {
 
 						<div className="space-y-6">
 							{data.project.map((p, index) => (
-								<div key={index} className="relative pl-6 border-l border-gray-200" style={{borderLeftColor: accentColor}}>
-
-
-									<div className="flex justify-between items-start">
-										<div>
-											<h3 className="text-lg font-medium text-gray-900">{p.name}</h3>
-										</div>
+								<div key={index} className="relative pl-6 border-l border-gray-200" style={{ borderLeftColor: accentColor }}>
+									<div className="flex items-center gap-3 flex-wrap">
+										<h3 className="text-lg font-medium text-gray-900">{p.name}</h3>
+										{p.codeUrl && (
+											<a href={p.codeUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-medium">
+												CodeURL
+											</a>
+										)}
+										{p.hostedUrl && (
+											<a href={p.hostedUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-medium">
+												HostedURL
+											</a>
+										)}
 									</div>
 									{p.description && (
 										<div className="text-gray-700 leading-relaxed text-sm mt-3">
@@ -162,6 +168,27 @@ const ModernTemplate = ({ data, accentColor }) => {
 										style={{ backgroundColor: accentColor }}
 									>
 										{skill}
+									</span>
+								))}
+							</div>
+						</section>
+					)}
+
+					{/* Certifications */}
+					{data.certifications && data.certifications.length > 0 && (
+						<section>
+							<h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
+								Certifications
+							</h2>
+
+							<div className="flex flex-wrap gap-2">
+								{data.certifications.map((cert, index) => (
+									<span
+										key={index}
+										className="px-3 py-1 text-sm border font-medium rounded-full"
+										style={{ borderColor: accentColor, color: accentColor }}
+									>
+										{cert}
 									</span>
 								))}
 							</div>

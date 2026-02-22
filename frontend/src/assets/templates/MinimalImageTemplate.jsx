@@ -18,7 +18,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     {/* Image */}
                     {data.personal_info?.image && typeof data.personal_info.image === 'string' ? (
                         <div className="mb-6">
-                            <img src={data.personal_info.image} alt="Profile" className="w-32 h-32 object-cover rounded-full mx-auto" style={{ background: accentColor+'70' }} />
+                            <img src={data.personal_info.image} alt="Profile" className="w-32 h-32 object-cover rounded-full mx-auto" style={{ background: accentColor + '70' }} />
                         </div>
                     ) : (
                         data.personal_info?.image && typeof data.personal_info.image === 'object' ? (
@@ -163,7 +163,19 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                             <div className="space-y-4">
                                 {data.project.map((project, index) => (
                                     <div key={index}>
-                                        <h3 className="text-md font-medium text-zinc-800 mt-3">{project.name}</h3>
+                                        <div className="flex items-center gap-3 flex-wrap mt-3">
+                                            <h3 className="text-md font-medium text-zinc-800">{project.name}</h3>
+                                            {project.codeUrl && (
+                                                <a href={project.codeUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">
+                                                    CodeURL
+                                                </a>
+                                            )}
+                                            {project.hostedUrl && (
+                                                <a href={project.hostedUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">
+                                                    HostedURL
+                                                </a>
+                                            )}
+                                        </div>
                                         <p className="text-sm mb-1" style={{ color: accentColor }} >
                                             {project.type}
                                         </p>

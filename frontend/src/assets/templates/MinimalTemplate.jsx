@@ -22,10 +22,10 @@ const MinimalTemplate = ({ data, accentColor }) => {
                     {data.personal_info?.phone && <span>{data.personal_info.phone}</span>}
                     {data.personal_info?.location && <span>{data.personal_info.location}</span>}
                     {data.personal_info?.linkedin && (
-                        <span className="break-all">{data.personal_info.linkedin}</span>
+                        <a href={data.personal_info.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 transition-colors underline decoration-gray-300 underline-offset-2">LinkedIn</a>
                     )}
                     {data.personal_info?.website && (
-                        <span className="break-all">{data.personal_info.website}</span>
+                        <a href={data.personal_info.website} target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 transition-colors underline decoration-gray-300 underline-offset-2">Personal Website</a>
                     )}
                 </div>
             </header>
@@ -76,8 +76,20 @@ const MinimalTemplate = ({ data, accentColor }) => {
 
                     <div className="space-y-4">
                         {data.project.map((proj, index) => (
-                            <div key={index} className="flex flex-col gap-2 justify-between items-baseline">
-                                <h3 className="text-lg font-medium ">{proj.name}</h3>
+                            <div key={index} className="flex flex-col gap-1">
+                                <div className="flex items-center gap-3 flex-wrap">
+                                    <h3 className="text-lg font-medium">{proj.name}</h3>
+                                    {proj.codeUrl && (
+                                        <a href={proj.codeUrl} target="_blank" rel="noopener noreferrer" className="text-xs underline decoration-gray-300 underline-offset-2 hover:text-gray-900">
+                                            CodeURL
+                                        </a>
+                                    )}
+                                    {proj.hostedUrl && (
+                                        <a href={proj.hostedUrl} target="_blank" rel="noopener noreferrer" className="text-xs underline decoration-gray-300 underline-offset-2 hover:text-gray-900">
+                                            HostedURL
+                                        </a>
+                                    )}
+                                </div>
                                 <p className="text-gray-600">{proj.description}</p>
                             </div>
                         ))}
@@ -113,13 +125,26 @@ const MinimalTemplate = ({ data, accentColor }) => {
 
             {/* Skills */}
             {data.skills && data.skills.length > 0 && (
-                <section>
+                <section className="mb-10">
                     <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
                         Skills
                     </h2>
 
                     <div className="text-gray-700">
                         {data.skills.join(" • ")}
+                    </div>
+                </section>
+            )}
+
+            {/* Certifications */}
+            {data.certifications && data.certifications.length > 0 && (
+                <section>
+                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+                        Certifications
+                    </h2>
+
+                    <div className="text-gray-700 font-medium">
+                        {data.certifications.join(" • ")}
                     </div>
                 </section>
             )}

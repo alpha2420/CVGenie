@@ -40,13 +40,13 @@ const ClassicTemplate = ({ data, accentColor }) => {
                     {data.personal_info?.linkedin && (
                         <div className="flex items-center gap-1">
                             <Linkedin className="size-4" />
-                            <span className="break-all">{data.personal_info.linkedin}</span>
+                            <a href={data.personal_info.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 hover:underline transition-colors">LinkedIn</a>
                         </div>
                     )}
                     {data.personal_info?.website && (
                         <div className="flex items-center gap-1">
                             <Globe className="size-4" />
-                            <span className="break-all">{data.personal_info.website}</span>
+                            <a href={data.personal_info.website} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 hover:underline transition-colors">Personal Website</a>
                         </div>
                     )}
                 </div>
@@ -101,11 +101,21 @@ const ClassicTemplate = ({ data, accentColor }) => {
 
                     <ul className="space-y-3 ">
                         {data.project.map((proj, index) => (
-                            <div key={index} className="flex justify-between items-start border-l-3 border-gray-300 pl-6">
-                                <div>
-                                    <li className="font-semibold text-gray-800 ">{proj.name}</li>
-                                    <p className="text-gray-600">{proj.description}</p>
+                            <div key={index} className="border-l-3 border-gray-300 pl-6">
+                                <div className="flex items-center gap-3 flex-wrap">
+                                    <li className="font-semibold text-gray-800">{proj.name}</li>
+                                    {proj.codeUrl && (
+                                        <a href={proj.codeUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline flex items-center gap-1">
+                                            <Globe className="size-3" /> CodeURL
+                                        </a>
+                                    )}
+                                    {proj.hostedUrl && (
+                                        <a href={proj.hostedUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline flex items-center gap-1">
+                                            <Globe className="size-3" /> HostedURL
+                                        </a>
+                                    )}
                                 </div>
+                                <p className="text-gray-600">{proj.description}</p>
                             </div>
                         ))}
                     </ul>
@@ -149,6 +159,23 @@ const ClassicTemplate = ({ data, accentColor }) => {
                         {data.skills.map((skill, index) => (
                             <div key={index} className="text-gray-700">
                                 • {skill}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {/* Certifications */}
+            {data.certifications && data.certifications.length > 0 && (
+                <section className="mb-6">
+                    <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
+                        CERTIFICATIONS
+                    </h2>
+
+                    <div className="flex gap-4 flex-wrap">
+                        {data.certifications.map((cert, index) => (
+                            <div key={index} className="text-gray-700 font-medium">
+                                • {cert}
                             </div>
                         ))}
                     </div>
