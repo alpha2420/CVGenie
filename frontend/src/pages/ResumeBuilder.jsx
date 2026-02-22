@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useEffect, useMemo, useState } from 'react'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 
 import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, DownloadIcon, EyeIcon, EyeOffIcon, FileText, FolderIcon, GraduationCap, Share2Icon, Sparkles, User, Award } from 'lucide-react'
 import PersonalInfoForm from '../components/PersonalInfoForm'
@@ -15,10 +15,14 @@ import CertificationsForm from '../components/CertificationsForm'
 import { useSelector } from 'react-redux'
 import api from '../configs/api'
 import toast from 'react-hot-toast'
+import { CATEGORY_MOCK_DATA } from '../data/categoryMockData'
 
 const ResumeBuilder = () => {
 
   const { resumeId } = useParams()
+  const [searchParams] = useSearchParams()
+  const category = searchParams.get('category') || 'it'
+  const mockData = CATEGORY_MOCK_DATA[category] || CATEGORY_MOCK_DATA.it
   const { token } = useSelector(state => state.auth)
 
   const [resumeData, setResumeData] = useState({
@@ -65,6 +69,32 @@ const ResumeBuilder = () => {
   ]
 
   const activeSection = sections[activeSectionIndex]
+
+  // Merge mock data with real data for preview — mock values fill in for empty fields
+  const previewData = useMemo(() => {
+    const hasPersonalInfo = resumeData.personal_info && Object.values(resumeData.personal_info).some(v => v && v !== '');
+    const mergedPersonalInfo = {};
+    if (mockData.personal_info) {
+      for (const key of Object.keys(mockData.personal_info)) {
+        mergedPersonalInfo[key] = resumeData.personal_info?.[key] || mockData.personal_info[key];
+      }
+    }
+    // Keep the user's image if they uploaded one
+    if (resumeData.personal_info?.image) {
+      mergedPersonalInfo.image = resumeData.personal_info.image;
+    }
+
+    return {
+      ...resumeData,
+      personal_info: hasPersonalInfo ? { ...mergedPersonalInfo } : mockData.personal_info,
+      professional_summary: resumeData.professional_summary || mockData.professional_summary,
+      experience: resumeData.experience?.length > 0 ? resumeData.experience : mockData.experience,
+      education: resumeData.education?.length > 0 ? resumeData.education : mockData.education,
+      project: resumeData.project?.length > 0 ? resumeData.project : mockData.project,
+      skills: resumeData.skills?.length > 0 ? resumeData.skills : mockData.skills,
+      certifications: resumeData.certifications?.length > 0 ? resumeData.certifications : mockData.certifications,
+    };
+  }, [resumeData, mockData]);
 
   useEffect(() => {
     loadExistingResume()
@@ -213,7 +243,7 @@ const ResumeBuilder = () => {
               </div>
             </div>
 
-            <ResumePreview data={resumeData} template={resumeData.template} accentColor={resumeData.accent_color} />
+            <ResumePreview data={previewData} template={resumeData.template} accentColor={resumeData.accent_color} />
           </div>
         </div>
       </div>
